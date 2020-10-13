@@ -1,4 +1,4 @@
-let videoPlayerArr = [];
+var videoPlayerArr = [];
 
 function initPkg_PopupPlayer() {
     initPkg_PopupPlayer_Dom();
@@ -145,12 +145,13 @@ function setElementResize(id) {
             h = Math.max(150, ev.clientY - pos.y + pos.h)
             w = w >= document.offsetWidth - box.offsetLeft ? document.offsetWidth - box.offsetLeft : w
             h = h >= document.offsetHeight - box.offsetTop ? document.offsetHeight - box.offsetTop : h
+            box.style.width = w + 'px';
+            box.style.height = h + 'px';
         }
         document.onmouseup = function (e) {
             e.stopPropagation();
             e.preventDefault();
-            box.style.width = w + 'px';
-            box.style.height = h + 'px';
+            
             
             document.onmousemove = null;
             document.onmouseup = null;
@@ -171,11 +172,11 @@ function setElementDrag(id) {
             event.stopPropagation();
             mouseX = event.clientX - xx;
             mouseY = event.clientY - yy;
+            box.style.left = mouseX + "px";
+            box.style.top = mouseY + "px";
         }
         document.onmouseup = function (event) {
             event.stopPropagation();
-            box.style.left = mouseX + "px";
-            box.style.top = mouseY + "px";
             document.onmousemove = null;
             document.onmouseup = null;
         }
@@ -186,7 +187,7 @@ function setElementDrag(id) {
 
 // Douyu
 function createNewVideo_Douyu(id, rid) {
-    getRealLive_Douyu(rid, false, "1", "1", (lurl) => {
+    getRealLive_Douyu(rid, true, "1", (lurl) => {
         if (lurl != "" || lurl != null) {
             if (lurl == "None") {
                 showMessage("房间未开播或其他错误", "error");
@@ -203,7 +204,7 @@ function createNewVideo_Douyu(id, rid) {
             a.rid = rid;
             a.className = "videoDiv";
             html += "<div class='videoInfo' id='videoInfo" + String(id) + "'><a title='复制直播流地址'><span class='videoRID' id='videoRID" + String(id) + "' style='color:white'>" + "斗鱼 - " + rid + "</span></a>";
-            html += "<select class='videoQn' id='videoQn" + String(id) + "'><option value='1'>流畅</option><option value='2'>高清</option><option value='3'>超清</option><option value='4'>蓝光4M</option></select>";
+            html += "<select class='videoQn' id='videoQn" + String(id) + "'><option value='1'>流畅</option><option value='2'>高清</option><option value='3'>超清</option><option value='0'>蓝光</option></select>";
             html += "<select style='display:none' class='videoCDN' id='videoCDN" + String(id) + "'><option value='1'>主线路</option><option value='2'>备用线路5</option><option value='3'>备用线路6</option></select>";
             html += "<a style='margin-left:5px' href='" + lurl_host + "' target='_blank'>无视频？</a>";
             html += "<a><div class='videoClose' id='videoClose" + String(id) + "'>X</div></a>";
@@ -251,13 +252,13 @@ function setElementFunc_Douyu(id, rid) {
     let videoCDN = document.getElementById("videoCDN" + String(id));
     let videoClose = document.getElementById("videoClose" + String(id));
     videoQn.onchange = function() {
-        getRealLive_Douyu(rid, false, videoQn.value, videoCDN.value, (lurl) => {
+        getRealLive_Douyu(rid, true, videoQn.value, (lurl) => {
             videoPlayerArr[id].destroy();
             setElementVideo(id, lurl);
         })
     }
     videoCDN.onchange = function() {
-        getRealLive_Douyu(rid, false, videoQn.value, videoCDN.value, (lurl) => {
+        getRealLive_Douyu(rid, true, videoQn.value, (lurl) => {
 			videoPlayerArr[id].destroy();
             setElementVideo(id, lurl);
         })
@@ -268,7 +269,7 @@ function setElementFunc_Douyu(id, rid) {
 
     let videoRID = document.getElementById("videoRID" + String(id));
     videoRID.onclick = function() {
-        getRealLive_Douyu(rid, false, videoQn.value, videoCDN.value, (lurl) => {
+        getRealLive_Douyu(rid, true, videoQn.value, (lurl) => {
             GM_setClipboard(String(lurl).replace("https", "http"));
             showMessage("复制成功", "success");
         })

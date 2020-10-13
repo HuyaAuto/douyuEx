@@ -154,6 +154,11 @@ function setNightMode() {
     .GuessReturnYwFdSlider-ywNum{color:rgb(237,90,101) !important;}
     .VideoBottomTabs span{color:rgb(204,204,204)}
     #point__value{color:rgb(191,191,191) !important;}
+    #red_envelope_text,#red_envelope_query{color:rgb(191,191,191) !important;}
+    .layout-Container{background-color:rgb(35,36,39) !important;}
+    .FansRankBottom-invisible,.ChatRankWeek-invisibleContent{background:rgb(47,48,53) !important;}
+    .Barrage-roomVip--super{border-top: 1px solid rgb(37,38,42)!important;border-bottom: 1px solid rgb(37,38,42)!important;background: rgb(37,38,42)!important;}
+    .Barrage-userEnter--vip{background: rgb(37,38,42)!important;}
     `;
     StyleHook_set("Ex_Style_NightMode", cssText);
 

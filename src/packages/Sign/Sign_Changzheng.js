@@ -1,4 +1,4 @@
-const ACTIVITY_DAY_ID = "393";
+const ACTIVITY_DAY_ID = "543";
 
 function initPkg_Sign_Changzheng() {
     getChangzheng();
@@ -23,21 +23,11 @@ async function getChangzheng() {
         }
     }
     
-}
-
-function signChangzheng() {
-    return new Promise(resolve => {
-        fetch("https://www.douyu.com/japi/carnival/nc/signAct/signIn", {
-            method: 'POST',
-            mode: 'no-cors',
-            credentials: 'include',
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'},
-            body: 'token=' + dyToken + "&signAlias=" + "XSDXZC"
-        }).then(res => {
-            return res.json();
-        }).then(ret => {
-            resolve(ret);
-        })
+    // await sleep(1000).then(() => {
+    //     initPkg_Sign_Chengxiao();
+    // })
+    await sleep(1000).then(() => {
+        initPkg_Sign_Lmjx();
     })
 }
 
@@ -56,6 +46,7 @@ function signChangzheng() {
         })
     })
 }
+
 
 function getChangzhengBox_Day() {
     return new Promise(resolve => {

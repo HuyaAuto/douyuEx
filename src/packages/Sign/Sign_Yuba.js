@@ -53,6 +53,17 @@ function signYuba(group_id, t) {
                 // showMessage("【鱼吧】" + group_id + response.response.message, "warning");
                 // console.log("【鱼吧】" + group_id + response.response.message);
             }
+            getSupplementaryNums(group_id).then(async (numsRet) => {
+                if (numsRet.status_code == "200") {
+                    let nums = numsRet.data.supplementary_cards;
+                    for (let j = 0; j < nums; j++) {
+                        let a = await signSupplementary(group_id);
+                        if (a.message == "补签失败") {
+                            break;
+                        }
+                    }
+                }
+            })
             if (doneYuba == totalYuba) {
                 // 完成全部签到
                 if (signedYuba > 0) {
@@ -94,6 +105,7 @@ async function signYubaList() {
 
 }
 
+
 function getYubaPage(page) {
     return new Promise(resolve => {
         GM_xmlhttpRequest({
@@ -107,6 +119,43 @@ function getYubaPage(page) {
             },
             onload: function(response) {
                 resolve(response.response.data)
+            }
+        });
+    })
+}
+
+function getSupplementaryNums(group_id) {
+    return new Promise(resolve => {
+        GM_xmlhttpRequest({
+            method: "GET",
+            url: "https://yuba.douyu.com/wbapi/web/signDetail?group_id=" + group_id,
+            responseType: "json",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+              "dy-client": "pc",
+              "dy-token": dyToken
+            },
+            onload: function(response) {
+                resolve(response.response);
+            }
+        });
+    })
+}
+
+function signSupplementary(group_id) {   
+    return new Promise(resolve => {
+        GM_xmlhttpRequest({
+            method: "POST",
+            url: "https://mapi-yuba.douyu.com/wb/v3/supplement",
+            responseType: "json",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded",
+                "client": "android",
+                "token": dyToken,
+            },
+            data: "group_id=" + group_id,
+            onload: function(response) {
+                resolve(response.response);
             }
         });
     })

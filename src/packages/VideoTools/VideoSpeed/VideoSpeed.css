@@ -1,12 +1,12 @@
-#ex-cinema {
+#ex-videospeed {
     float: left;
     width: 24px;
     height: 24px;
-    margin-right: 20px;
+    margin-right: 10px;
     cursor: pointer;
     background-size: contain;
 }
-.cinema__wrap {
+.videospeed__wrap {
     display: none;
     position: relative;
     height: 100%;
@@ -20,7 +20,7 @@
     right: -12px;
 }
 
-.cinema__panel {
+.videospeed__panel {
     position: absolute;
     border: 1px solid #000;
     border-radius: 4px;
@@ -31,7 +31,7 @@
     width: 70px;
 }
 
-.cinema__panel li {
+.videospeed__panel li {
     padding: 0 2px;
     white-space: nowrap;
     color: #fff;
@@ -39,6 +39,6 @@
     cursor: pointer;
 }
 
-.cinema__panel li:hover {
+.videospeed__panel li:hover {
     background-color: rgb(85, 85, 85);
 }  
